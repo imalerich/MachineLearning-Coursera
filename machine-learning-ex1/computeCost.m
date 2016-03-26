@@ -5,8 +5,8 @@ function J = computeCost(X, y, theta)
 %   parameter for linear regression to fit the data points in X and y
 
 % Initialize some useful values
-m = length(y); % number of training examples
 
-J = (1/(2*m)) * sum(sum((theta * X') * eye(3) - y))^2;
+m = length(y); % number of training examples
+J = (1/(2*m)) * sum((X * theta - y) .^ 2);
 
 end

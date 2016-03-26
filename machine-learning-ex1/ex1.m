@@ -62,6 +62,8 @@ alpha = 0.01;
 % compute and display initial cost
 computeCost(X, y, theta)
 
+fprintf('computeCast()');
+
 % run gradient descent
 theta = gradientDescent(X, y, theta, alpha, iterations);
 
