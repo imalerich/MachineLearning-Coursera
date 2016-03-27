@@ -1,24 +1,20 @@
-function plotData(x, y)
-%PLOTDATA Plots the data points x and y into a new figure 
-%   PLOTDATA(x,y) plots the data points and gives the figure axes labels of
-%   population and profit.
+function plotData(X, y)
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Plot the training data into a figure using the 
-%               "figure" and "plot" commands. Set the axes labels using
-%               the "xlabel" and "ylabel" commands. Assume the 
-%               population and revenue data have been passed in
-%               as the x and y arguments of this function.
-%
-% Hint: You can use the 'rx' option with plot to have the markers
-%       appear as red crosses. Furthermore, you can make the
-%       markers larger by using plot(..., 'rx', 'MarkerSize', 10);
+% PLOTDATA Plots the data points X and y into a new figure 
+%   PLOTDATA(x,y) plots the data points with + for the positive examples
+%   and o for the negative examples. X is assumed to be a Mx2 matrix.
 
-figure; % opens a new figuer
-plot(x, y, 'rx', 'MarkerSize', 10);
-xlabel('population');
-ylabel('revenue');
+figure; hold on;
 
-% ============================================================
+neg = [];
+pos = [];
+
+pos = find(y == 1);
+neg = find(y == 0);
+
+plot(X(pos, 1), X(pos, 2),'k+', 'LineWidth', 2, 'MarkerSize', 7);
+plot(X(neg, 1), X(neg, 2),'ko', 'LineWidth', 2, 'MarkerSize', 7);
+
+hold off;
 
 end
