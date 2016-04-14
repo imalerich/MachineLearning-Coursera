@@ -9,21 +9,6 @@ function p = predictOneVsAll(all_theta, X)
 %  of values from 1..K (e.g., p = [1; 3; 1; 2] predicts classes 1, 3, 1, 2
 %  for 4 examples) 
 
-m = size(X, 1);
-num_labels = size(all_theta, 1);
-
-% You need to return the following variables correctly 
-p = zeros(size(X, 1), 1);
-
-% Add ones to the X data matrix
-X = [ones(m, 1) X];
-
-% ====================== YOUR CODE HERE ======================
-% Instructions: Complete the following code to make predictions using
-%               your learned logistic regression parameters (one-vs-all).
-%               You should set p to a vector of predictions (from 1 to
-%               num_labels).
-%
 % Hint: This code can be done all vectorized using the max function.
 %       In particular, the max function can also return the index of the 
 %       max element, for more information see 'help max'. If your examples 
@@ -31,13 +16,19 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% m is the number of examples we wish to predict
+m = size(X, 1);
 
+% The number of possible classifications an example might be,
+% each corresponding to a row of 'all_theta', for each 
+% example (we have m of them), we need to classify it as
+% an index from [1, m].
+num_labels = size(all_theta, 1);
 
+% Add ones to the X data matrix
+X = [ones(m, 1) X];
 
-
-
-
-% =========================================================================
-
+s = sigmoid(X * all_theta');
+[s, p] = max(s, [], 2);
 
 end
