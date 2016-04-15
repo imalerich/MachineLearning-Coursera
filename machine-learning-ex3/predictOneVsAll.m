@@ -19,13 +19,7 @@ function p = predictOneVsAll(all_theta, X)
 % m is the number of examples we wish to predict
 m = size(X, 1);
 
-% The number of possible classifications an example might be,
-% each corresponding to a row of 'all_theta', for each 
-% example (we have m of them), we need to classify it as
-% an index from [1, m].
-num_labels = size(all_theta, 1);
-
-% Add ones to the X data matrix
+% Add ones to the X matrix
 X = [ones(m, 1) X];
 
 s = sigmoid(X * all_theta');
