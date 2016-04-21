@@ -14,15 +14,6 @@ function [J grad] = nnCostFunction(nn_params, ...
 %   partial derivatives of the neural network.
 %
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: You should complete the code by working through the
-%               following parts.
-%
-% Part 1: Feedforward the neural network and return the cost in the
-%         variable J. After implementing Part 1, you can verify that your
-%         cost function computation is correct by verifying the cost
-%         computed in ex4.m
-%
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -32,8 +23,6 @@ function [J grad] = nnCostFunction(nn_params, ...
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
-%
-% Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
 %               backpropagation. That is, you can compute the gradients for
@@ -82,10 +71,30 @@ end
 % We have everything now to calculate our cost.
 c = (-Y' .* log(s)) - ((1-Y)' .* log(1 - s));
 J = (1/m) * sum(sum(c));
+
+% Add the regularization parameters.
+reg = 0;
+
+theta = Theta1;
+theta(:, 1) = 0;
+theta = theta .^ 2;
+reg += sum(sum(theta))
          
+theta = Theta2;
+theta(:, 1) = 0;
+theta = theta .^ 2;
+reg += sum(sum(theta))
+
+% Add the regularization parameter to our total cost.
+J += (lambda * reg) / (2 * m);
+
 % You need to return the following variables correctly 
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
+
+% Perform the Backpropogation algorithm for gradient calculation.
+for t = 1:m
+end
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
