@@ -78,23 +78,48 @@ reg = 0;
 theta = Theta1;
 theta(:, 1) = 0;
 theta = theta .^ 2;
-reg += sum(sum(theta))
+reg += sum(sum(theta));
          
 theta = Theta2;
 theta(:, 1) = 0;
 theta = theta .^ 2;
-reg += sum(sum(theta))
+reg += sum(sum(theta));
 
 % Add the regularization parameter to our total cost.
 J += (lambda * reg) / (2 * m);
 
-% You need to return the following variables correctly 
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
-
 % Perform the Backpropogation algorithm for gradient calculation.
+Theta2_grad = zeros(size(Theta2));
+Theta1_grad = zeros(size(Theta1));
+
 for t = 1:m
+	% Forward propogate this example through the neural network.
+	a_1 = X(t, :)';
+	z_2 = Theta1 * a_1;
+	a_2 = [1; sigmoid(z_2)];
+	z_3 = Theta2 * a_2;
+	a_3 = sigmoid(z_3);
+
+	delta_3 = a_3 - Y(:, t);
+	delta_2 = (Theta2' * delta_3);
+	delta_2 = delta_2 .* [1; sigmoidGradient(z_2)];
+	delta_2 = delta_2(2:end);
+
+	Theta2_grad += delta_3 * a_2';
+	Theta1_grad += delta_2 * a_1';
 end
+
+% Divide the gradients by m.
+Theta2_grad *= (1 / m);
+Theta1_grad *= (1 / m);
+
+% Zero out column 0 of our Theta matrixes, these will not be penalized by regularization.
+Theta2(:, 1) = 0;
+Theta1(:, 1) = 0;
+
+% Add the regularization term for the gradients.
+Theta2_grad += (lambda / m) * Theta2;
+Theta1_grad += (lambda / m) * Theta1;
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
