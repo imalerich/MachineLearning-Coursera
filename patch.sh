@@ -1,3 +1,3 @@
 #! /bin/bash
 
-cp -r lib/ machine-learning-*/
+cp -r lib/ ex*/
