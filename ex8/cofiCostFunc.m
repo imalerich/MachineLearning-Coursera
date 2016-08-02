@@ -17,9 +17,17 @@ tmp = X * Theta' - Y;
 % Compute the cost for the input data.
 J = 0.5 * sum(sum(R .* tmp .^ 2));
 
+% Add the regularization parametr to the cost function.
+J += (lambda/2) * sum(sum(X .^ 2));
+J += (lambda/2) * sum(sum(Theta .^ 2));
+
 % Compute the needed gradients.
-X_grad = ((X * Theta' - Y) .* R) * Theta;
-Theta_grad = ((X * Theta' - Y) .* R)' * X;
+X_grad = (tmp .* R) * Theta;
+Theta_grad = (tmp .* R)' * X;
+
+% Add the regularization parameter to the gradients.
+X_grad += lambda * X;
+Theta_grad += lambda * Theta;
 
 grad = [X_grad(:); Theta_grad(:)];
 
